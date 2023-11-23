@@ -200,6 +200,117 @@ exports.handler = async (event) => {
 }
 ```
 
+# Autentisering till aws, lägga till middy som middleware
+Börja med att se till att rätt version av middy är installerat i projektet. Vi har ju använt oss av commonJS tidigare och senaste versionen av middy har inte stöd för det.
+
+### I package.json
+under dependencies, se till att ändra middy-propertyn:
+```yml
+{...
+"@middy/core": "^4.6.0"
+...}
+```
+### I terminalen:
+Kör `npm install`
+
+### I functions/getDogs/index.js:
+```javascript
+const AWS = require('aws-sdk');
+const { sendResponse } = require('../../responses');
+const middy = require('@middy/core'); // Vi importerar middy
+const { validateToken } = require('../middleware/auth');
+const db = new AWS.DynamoDB.DocumentClient();
+
+
+
+const getDogs = async (event, context) => {
+
+  if (event?.error && event?.error === '401')
+     return sendResponse(401, {success: false, message: 'Invalid token'});
+    
+  const {Items} = await db.scan({
+    TableName: 'dogs-db'
+  }).promise();
+
+    return sendResponse(200, {success: true, dogs: Items});
+}
+
+const handler = middy(getDogs)
+     .use(validateToken)
+  
+
+module.exports = { handler };
+```
+- Skapa en ny fil: `/functions/middleware/auth.js`
+
+### I /functions/middleware/auth.js
+- Skapa funktion för att det ska krävs en giltig inloggning för att köra getDogs.
+
+```javascript
+const jwt = require('jsonwebtoken');
+
+const validateToken = {
+    before: async (request) => {
+        try {
+            const token = request.event.headers.authorization.replace('Bearer ', '');
+
+            if (!token) throw new Error();
+
+            const data = jwt.verify(token, 'aabbcc');
+
+            request.event.id = data.id;
+            request.event.username = data.username;
+
+            return request.response;
+        } catch (error) {
+            request.event.error = '401'
+            return request.response;
+        } 
+    },
+    onError: async (request) => {
+        request.event.error = '401'
+        return request.response;
+    }
+}
+
+module.exports = { validateToken };
+```
+- Skicka upp koden till aws `sls deploy`
+
+I terminalen:
+Kör:
+
+sls deply
+
+### I Insomnia:
+- Börja med att logga in en existerande användare: `(Finns det inte får du skapa en!)`
+- POST https://{ditt_api:s_adress}/auth/login
+- Skicka med username och password:
+```yml
+{
+  "username": "sis",
+  "password": "sita123"
+}
+```
+Du får förhoppningsvis tillbaks en respons som ser ut så här ungefär:
+```yml
+{
+	"success": true,
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFrTm5NeWxnRExHM19sOVROVGdFQyIsInVzZXJuYW1lIjoic2lzIiwiaWF0IjoxNzAwNTc2OTQ2LCJleHAiOjE3MDA1ODA1NDZ9.X6qYjIZ2nB3SUysO8ctgQg97jb7nlh_54sDGX-Z_6vE"
+}
+```
+- Kopiera token
+- Nu gör du ett anrop till: `GET https://{ditt_api:s_adress}/dogs`
+
+### MEN GLÖM INTE:
+- Du måste skicka med din token!
+- I Insomnia, öppna fliken `auth`
+- Välj `Bearer` token i drop-down-menyn.
+- Klistra in din `token`.
+- Tryck på send.
+`Om din token är valid, så körs lambda-funktionen och listan med hundar returneras.`
+
+
 
 
 
