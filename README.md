@@ -8,8 +8,7 @@
 
 ### I serverless.yml:
 - Vi lägger till en ny tabell till databasen för att lagra våra användare:
-  
-Under:
+- Under:
 ```yml
 resources:
   Resources:
@@ -46,8 +45,7 @@ resources:
 # Skapa en signUp-funktion:
 - Ny folder i funktions-foldern: `signUp`
 - Nytt dokument: `index.js`
-  
-Exempel:
+- Exempel:
 ```yml
 const { nanoid } = require("nanoid");
 const { sendResponse } = require("../../responses");
@@ -113,8 +111,7 @@ signUp:
 - Skicka upp koden till aws `sls deploy`
 - Testa med Insomnia:
 - Använd den nya endpoint vi skapat `https://{din adress till aws kolla api gateway}/auth/signup`
-  
-Skicka med en JSON med data för det nya kontot:
+- Skicka med en JSON med data för det nya kontot:
 ```yml
 {
  "username": "sis",
@@ -127,8 +124,7 @@ Skicka med en JSON med data för det nya kontot:
 # Skapa en login-funktion:
 - Ny folder i funktions-foldern: `login`
 - Nytt dokument: `index.js`
-  
-Exempel:
+- Exempel:
 ```yml
 const AWS = require('aws-sdk');
 const db = new AWS.DynamoDB.DocumentClient();
@@ -196,8 +192,7 @@ exports.handler = async (event) => {
 - Skicka upp koden till aws `sls deploy`
 - Testa med Insomnia:
 - Använd den nya endpoint vi skapat `https://{din adress till aws kolla api gateway}/auth/signup`
-  
-Skicka med en JSON med username och password:
+- Skicka med en JSON med username och password:
 ```yml
 {
   "username": "sis",
