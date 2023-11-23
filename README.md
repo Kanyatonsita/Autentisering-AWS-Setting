@@ -46,7 +46,7 @@ resources:
 - Ny folder i funktions-foldern: `signUp`
 - Nytt dokument: `index.js`
 - Exempel:
-```yml
+```javascript
 const { nanoid } = require("nanoid");
 const { sendResponse } = require("../../responses");
 const bcrypt = require('bcryptjs');
@@ -125,7 +125,7 @@ signUp:
 - Ny folder i funktions-foldern: `login`
 - Nytt dokument: `index.js`
 - Exempel:
-```yml
+```javascript
 const AWS = require('aws-sdk');
 const db = new AWS.DynamoDB.DocumentClient();
 const bcrypt = require('bcryptjs');
