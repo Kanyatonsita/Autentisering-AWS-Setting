@@ -277,11 +277,6 @@ module.exports = { validateToken };
 ```
 - Skicka upp koden till aws `sls deploy`
 
-I terminalen:
-Kör:
-
-sls deply
-
 ### I Insomnia:
 - Börja med att logga in en existerande användare: `(Finns det inte får du skapa en!)`
 - POST https://{ditt_api:s_adress}/auth/login
