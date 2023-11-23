@@ -77,8 +77,8 @@ async function createAccount(username, hashedPassword, userId, firstname, lastna
 
 async function signup(username, password, firstname, lastname) {
 
-    // check if username already exists
-    // if username exists -> return { success: false, message: 'username already exists'}
+    //check if username already exists
+    //if username exists -> return { success: false, message: 'username already exists'}
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
