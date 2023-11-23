@@ -8,6 +8,7 @@
 
 ### I serverless.yml:
 - Vi lägger till en ny tabell till databasen för att lagra våra användare:
+  
 Under:
 ```yml
 resources:
@@ -45,6 +46,7 @@ resources:
 # Skapa en signUp-funktion:
 - Ny folder i funktions-foldern: `signUp`
 - Nytt dokument: `index.js`
+  
 Exempel:
 ```yml
 const { nanoid } = require("nanoid");
@@ -111,6 +113,7 @@ signUp:
 - Skicka upp koden till aws `sls deploy`
 - Testa med Insomnia:
 - Använd den nya endpoint vi skapat `https://{din adress till aws kolla api gateway}/auth/signup`
+  
 Skicka med en JSON med data för det nya kontot:
 ```yml
 {
@@ -124,6 +127,7 @@ Skicka med en JSON med data för det nya kontot:
 # Skapa en login-funktion:
 - Ny folder i funktions-foldern: `login`
 - Nytt dokument: `index.js`
+  
 Exempel:
 ```yml
 const AWS = require('aws-sdk');
@@ -192,6 +196,7 @@ exports.handler = async (event) => {
 - Skicka upp koden till aws `sls deploy`
 - Testa med Insomnia:
 - Använd den nya endpoint vi skapat `https://{din adress till aws kolla api gateway}/auth/signup`
+  
 Skicka med en JSON med username och password:
 ```yml
 {
