@@ -290,8 +290,8 @@ module.exports = { validateToken };
 Du får förhoppningsvis tillbaks en respons som ser ut så här ungefär:
 ```yml
 {
-	"success": true,
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFrTm5NeWxnRExHM19sOVROVGdFQyIsInVzZXJuYW1lIjoic2lzIiwiaWF0IjoxNzAwNTc2OTQ2LCJleHAiOjE3MDA1ODA1NDZ9.X6qYjIZ2nB3SUysO8ctgQg97jb7nlh_54sDGX-Z_6vE"
+ "success": true,
+ "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkFrTm5NeWxnRExHM19sOVROVGdFQyIsInVzZXJuYW1lIjoic2lzIiwiaWF0IjoxNzAwNTc2OTQ2LCJleHAiOjE3MDA1ODA1NDZ9.X6qYjIZ2nB3SUysO8ctgQg97jb7nlh_54sDGX-Z_6vE"
 }
 ```
 - Kopiera token
